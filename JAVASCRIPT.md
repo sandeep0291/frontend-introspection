@@ -312,13 +312,159 @@ D. [Coding / Array / Objects]()
     Event bubbling can be useful for creating more maintainable and flexible code, as it allows you to attach event listeners to parent elements instead of individual child elements. This can simplify your code and reduce the number of event listeners that need to be created. However, it's important to be aware of event bubbling and how it can affect your code, as it can sometimes lead to unintended consequences if not handled properly.
 
 8. **What is the difference between a function declaration and a function expression in JavaScript?**
+    One key difference between function declarations and function expressions is hoisting. Function declarations are hoisted to the top of their scope, which means they can be called before they are declared in the code. Function expressions are not hoisted, so they cannot be called before they are defined.
+
+    Another difference is that function declarations create a variable in the current scope with the same name as the function name, whereas function expressions create a variable that holds the function.
+
+    Function declarations are generally preferred when you want to define a function that will be used throughout your code, while function expressions are useful for defining functions on the fly, as arguments to other functions, or for creating closures.
+
+    1. As arguments to other functions:
+
+        Function expressions can be used as arguments to other functions. For example, the Array.prototype.map() method takes a function as an argument and applies it to each element of an array. Here, we define the function to be passed to map() using a function expression:
+
+        ```javascript
+        const numbers = [1, 2, 3];
+        const doubled = numbers.map(function(num) {
+        return num * 2;
+        });
+        console.log(doubled); // Output: [2, 4, 6]
+        ```
+    2. For creating closures:
+       Closures allow you to create a function that has access to variables in its outer scope, even after the outer function has returned. You can use a function expression to create a closure. For example:
+
+       ```javascript
+        function makeCounter() {
+        let count = 0;
+        return function() {
+            count++;
+            console.log(count);
+        };
+        }
+        const counter = makeCounter();
+        counter(); // Output: 1
+        counter(); // Output: 2
+       ```
+       Here, the makeCounter() function returns a function that increments and logs a count variable. We assign the returned function to a variable named counter, and each time we call it, the count variable is incremented and logged.
+
+    3. Functions on the fly:'
+
+        Function expressions can be used to define functions "on the fly" when they are needed. For example, if you have a conditional statement that requires a different function to be executed based on a condition, you can define the function using a function expression:
+
+        ```javascript
+            function sayHello(isFriendly) {
+                const greeting = isFriendly ? "Hi" : "Hello";
+                const sayGreeting = function(name) {
+                    console.log(`${greeting}, ${name}!`);
+                };
+                return sayGreeting;
+            }
+
+            const greet = sayHello(true);
+            greet("Alice"); // Output: Hi, Alice!
+
+            const sayGoodbye = sayHello(false);
+            sayGoodbye("Bob"); // Output: Hello, Bob!
+        ```
+
+        In this example, the sayHello() function takes a boolean argument isFriendly. If isFriendly is true, the function returns a function that says "Hi", otherwise it returns a function that says "Hello". We assign the returned function to a variable named greet or sayGoodbye, depending on the value of isFriendly, and call it with a name argument.
+
+
+
 
 9. **What is the difference between an object and an array in JavaScript?**
 
-10. **What is the difference between a callback function and a promise in JavaScript?
-What is the purpose of the this keyword in JavaScript?**
+10. **What is the difference between a callback function and a promise in JavaScript?**
+
+    The main difference between a callback function and a promise is that a promise provides a more structured way of handling asynchronous operations by allowing you to chain multiple operations together and handle errors in a more centralized way. However, callbacks are still commonly used, especially in older code or for simple tasks where a full promise may be overkill.
+
+11. **What is the purpose of the this keyword in JavaScript?**
+    In JavaScript, the this keyword refers to the object that the current code is being executed in. The exact value of this depends on how and where the current function is called.
+
+    Here are some common use cases for the this keyword in JavaScript:
+
+    1. Function context: 
+    
+       When a function is called as a method of an object, the this keyword refers to the object itself. For example:
+
+        ```javascript
+        const myObject = {
+            myMethod() {
+                console.log(this);
+            }
+        };
+
+        myObject.myMethod(); // logs myObject
+        ```
+    2. Constructor function context
+
+        When a function is called using the new keyword to create a new object, the this keyword refers to the new object being created. For example:
+
+        ```javascript
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        const person = new Person('John', 30); // creates a new Person object
+        console.log(person); // logs { name: 'John', age: 30 }
+        ```
+    3. Global context
+
+        When a function is called without any object context, the this keyword refers to the global object (window in the browser or global in Node.js). For example:
+
+        ```javascript
+        function myFunction() {
+            console.log(this);
+        }
+
+        myFunction(); // logs the global object
+        ```
+    4. Explicit context:
+
+        You can also set the this keyword explicitly using the call() or apply() methods. These methods allow you to call a function with a specific object context. For example:
+
+        ```javascript
+        const myObject = {
+            myMethod() {
+                console.log(this);
+            }
+        };
+
+        const anotherObject = { name: 'Jane' };
+
+        myObject.myMethod.call(anotherObject); // logs anotherObject
+        ```
+        The this keyword can be a powerful tool in JavaScript, but it can also be a source of confusion and bugs if not used properly. Understanding the context and value of this in your code is important for writing effective and bug-free JavaScript.
 
 11. **What is a constructor function in JavaScript and how does it work?**
+
+    In JavaScript, a constructor function is a special type of function that is used to create and initialize objects. It works by defining a template for a new object and allowing you to set initial values for its properties and methods.
+
+    To create a constructor function, you can use the function keyword followed by the name of the function, and then define the properties and methods that you want to include in the object using the this keyword:
+
+    ```javascript
+    function Person(name, age) {
+        this.name = name;
+        this.age = age;
+        
+        this.greet = function() {
+            console.log(`Hello, my name is ${this.name} and I'm ${this.age} years old.`);
+        }
+    }
+    ```
+
+    In this example, the Person function is a constructor function that takes two arguments (name and age) and initializes the object with those values using the this keyword. It also defines a greet() method that logs a message to the console using the object's name and age properties.
+
+    To create a new object using the Person constructor, you can use the new keyword followed by the name of the constructor function and any arguments that it requires:
+
+    ```javascript
+    const person = new Person('John', 30);
+    person.greet(); // logs "Hello, my name is John and I'm 30 years old."
+    ```
+
+    In this example, we create a new person object using the Person constructor function with the values 'John' and 30 for its name and age properties, respectively. We then call the greet() method on the person object to log a message to the console.
+
+    Constructor functions are a powerful tool in JavaScript for creating and initializing objects with similar properties and methods. They allow you to define a template for your objects and avoid repeating code for each new object that you create.
 
 11. **What is the difference between `null` and `undefined` in JavaScript?**
 12. **What is the difference between `==` and `===` in JavaScript?**
