@@ -4,7 +4,7 @@ Listing all the possible JavaScript questions, divided into following types
 
 A. [Fundamentals Theory](#fundamentals-theory)
 
-B. [Fundamentals Practical]()
+B. [Code Snippets Tricky Questions](#code-Snippets-tricky-questions)
 
 C. [Advanced Concepts]()
 
@@ -368,9 +368,6 @@ D. [Coding / Array / Objects]()
 
         In this example, the sayHello() function takes a boolean argument isFriendly. If isFriendly is true, the function returns a function that says "Hi", otherwise it returns a function that says "Hello". We assign the returned function to a variable named greet or sayGoodbye, depending on the value of isFriendly, and call it with a name argument.
 
-
-
-
 9. **What is the difference between an object and an array in JavaScript?**
 
 10. **What is the difference between a callback function and a promise in JavaScript?**
@@ -580,3 +577,245 @@ D. [Coding / Array / Objects]()
         greetPerson('Bob'); // logs "Hello, Bob! My name is Alice."
         ```
     
+
+## Code Snippets Tricky Questions
+
+1. Snippet 1
+    ```javascript
+    console.log("1" + 2 + 3);
+    console.log(4 + 5 + "6");
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      123
+      
+    96
+      </p>
+    </details>
+
+2. Snippet 2
+    ```javascript
+    var x = 1;
+    console.log(x++ + ++x);
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      4
+      </p>
+    </details>
+
+3. Snippet 3
+    ```javascript
+    var x = [typeof x, typeof y][1];
+    var y = typeof [x, y];
+    console.log(x + " " + y);
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      undefined object
+      </p>
+    </details>
+
+4. Snippet 4
+    ```javascript
+    function foo(a, b) {
+        return arguments.length;
+    }
+    console.log(foo(1, 2, 3));
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      3
+      </p>
+    </details>
+
+5. Snippet 5
+    ```javascript
+   var obj = {
+        x: 1,
+        getX: function() {
+            return this.x;
+        }
+    };
+    console.log(obj.getX());
+    var getX = obj.getX;
+    console.log(getX());
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      1
+
+    undefined
+      </p>
+    </details>
+
+6. Snippet 6
+    ```javascript
+    console.log(typeof typeof 1);
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      string
+      </p>
+    </details>
+
+7. Snippet 7
+    ```javascript
+    function Person(name) {
+        this.name = name;
+    }
+
+    Person.prototype.printName = function() {
+    console.log(this.name);
+    };
+
+    var person1 = new Person("Alice");
+    var person2 = new Person("Bob");
+
+    person1.printName();
+    person2.printName();
+
+    person1.__proto__.printName = function() {
+        console.log("Hacked!");
+    };
+
+    person1.printName();
+    person2.printName();
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      Alice
+
+    Bob
+
+    Hacked!
+
+    Hacked!
+      </p>
+    </details>
+
+8. Snippet 8
+    ```javascript
+    var a = [1, 2, 3];
+    a[10] = 10;
+    console.log(a);
+    console.log(a.length)
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      [1, 2, 3, empty × 7, 10] 
+
+    11
+      </p>
+    </details>
+
+9. Snippet 9
+    ```javascript
+    var a = [1, 2, 3];
+    var b = a;
+    b.push(4);
+    console.log(a);
+    console.log(b);
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+       [1, 2, 3, 4]
+
+     [1, 2, 3, 4]
+      </p>
+    </details>
+
+10. Snippet 10
+    ```javascript
+    var a = 1;
+    function foo() {
+        console.log(a);
+        var a = 2;
+    }
+    foo();
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+       undefined
+      </p>
+    </details>
+
+**Tricky questions on event loop concept**
+
+1. Snippet 1
+    ```javascript
+   console.log("A");
+    setTimeout(function() {
+        console.log("B");
+    }, 1000);
+    setTimeout(function() {
+        console.log("C");
+    }, 0);
+    console.log("D");
+
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      A D C B
+      </p>
+    </details>
+
+2. Snippet 2
+    ```javascript
+    console.log("A");
+    setTimeout(function() {
+        console.log("B");
+    }, 0);
+    Promise.resolve().then(function() {
+        console.log("C");
+    });
+    console.log("D")
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      A D C B
+      </p>
+    </details>
+
+**Tricky question on == and ===**
+
+1. Snippet
+    ```javascript
+    console.log(5 == "5");
+    console.log(5 === "5");
+
+    console.log(0 == "");
+    console.log(0 === "");
+
+    console.log(null == undefined);
+    console.log(null === undefined);
+
+    console.log("0" == false);
+    console.log("0" === false);
+    ``` 
+    <details>
+      <summary>Answer</summary>
+      <p>
+      true, false
+
+    true, false
+
+    true, false
+    
+    true, false
+
+    true, false
+      </p>
+    </details>
