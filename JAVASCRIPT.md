@@ -466,12 +466,117 @@ D. [Coding / Array / Objects]()
 
     Constructor functions are a powerful tool in JavaScript for creating and initializing objects with similar properties and methods. They allow you to define a template for your objects and avoid repeating code for each new object that you create.
 
-11. **What is the difference between `null` and `undefined` in JavaScript?**
-12. **What is the difference between `==` and `===` in JavaScript?**
+12. **What is prototype and prototype chaining in JavaScript?**
 
-13. **What is the difference between synchronous and asynchronous JavaScript?**
+    In JavaScript, each object has a special internal property called the prototype. This property is a reference to another object that is used as a fallback source for property and method lookups. When an object is created using a constructor function, its prototype property is set to the prototype property of the constructor function.
 
-14. **What are the different ways to declare a function in JavaScript?**
+    Prototype chaining is the mechanism by which objects in JavaScript inherit properties and methods from their prototype objects. When you try to access a property or method on an object, JavaScript first checks if the object itself has that property or method. If it doesn't, it then looks at the object's prototype object and checks if that object has the property or method. If it doesn't, it looks at the prototype object's prototype object, and so on, until it reaches the end of the prototype chain.
 
-15. **What is event bubbling in JavaScript?**
-16. **What are the different ways to loop through an array in JavaScript?**
+    ```javascript
+    function Animal(name) {
+        this.name = name;
+    }
+
+    Animal.prototype.sayHello = function() {
+        console.log(`Hello, my name is ${this.name}.`);
+    };
+
+    function Dog(name, breed) {
+        Animal.call(this, name);
+         // .call() is a method on every function that allows you to invoke the function specifying 
+        // in what context the function will be invoked.
+        // here this is Dog context, now Dog will have Anima
+        this.breed = breed;
+    }
+
+    // Now how we get the methods of Animal
+    // By Mapping Dog.prototype to Aimal.prototype
+    Dog.prototype = Object.create(Animal.prototype);
+    // finally resetting constructor as we have overriden Dog.prototype.constructor function with Animal.protoype.constructo
+    Dog.prototype.constructor = Dog;
+
+    Dog.prototype.bark = function() {
+        console.log('Woof!');
+    };
+
+    const myDog = new Dog('Rex', 'Labrador');
+    myDog.sayHello(); // logs "Hello, my name is Rex."
+    myDog.bark(); // logs "Woof!"
+    ```
+    In this example, we define two constructor functions: Animal and Dog. The Animal constructor function sets the name property on the created object and defines a sayHello() method on its prototype object. The Dog constructor function calls the Animal constructor function to set the name property on the created object and also sets its own breed property. It then creates a new prototype object that is based on the Animal.prototype object and sets the Dog.prototype property to this new object. Finally, it defines a bark() method on the Dog.prototype object.
+
+    When we create a new myDog object using the Dog constructor function, it inherits the sayHello() method from its prototype object via the prototype chain. We can also call the bark() method on the myDog object, which is defined on its own prototype object.
+
+    In summary, the prototype property and prototype chaining are important concepts in JavaScript that allow objects to inherit properties and methods from other objects in a flexible and efficient way. Understanding how they work is key to writing effective and reusable code in JavaScript.
+
+13. **What is Lexical Scope in Javacript**
+
+    Lexical scope is a way of determining the scope of a variable or a function in JavaScript based on where it is defined in the source code. In other words, it refers to the visibility of variables and functions within a particular block of code, and it's determined at the time the code is written, not when it's executed.
+
+    JavaScript has a feature called lexical scoping or static scoping, which means that the visibility of a variable or function depends on where it was declared in the source code. The scope of a variable or function is defined by its surrounding code block.
+
+    ```javascript
+    function outer() {
+        const x = 10;
+
+        function inner() {
+            console.log(x); // logs 10
+        }
+        inner();
+    }
+    outer();
+    ```
+    In this example, the x variable is defined in the outer function, and the inner function is defined inside the outer function. When the inner function is called, it can access the x variable because it is defined in its outer scope (the outer function). This is an example of lexical scoping in action.
+
+    In summary, lexical scope is a fundamental concept in JavaScript that allows variables and functions to be visible or invisible to other parts of the code based on where they are defined. Understanding how lexical scope works is essential for writing clean and maintainable code in JavaScript.
+
+
+14. **What is difference b/w call bind and apply**
+
+    call, bind, and apply are three methods in JavaScript that are used to manipulate the this keyword and arguments passed to a function. While all three methods are used to invoke a function with a specified this value, they differ in how they handle additional arguments.
+
+    Here are the key differences between call, bind, and apply:
+
+    1. call: The call method is used to call a function with a given this value and arguments provided individually. It takes the this value as the first argument, followed by the individual arguments.
+
+        Example:
+
+        ```javascript
+        function greet(name) {
+            console.log(`Hello, ${name}! My name is ${this.name}.`);
+        }
+
+        const person = { name: 'Alice' };
+
+        greet.call(person, 'Bob'); // logs "Hello, Bob! My name is Alice."
+        ```
+
+    2. apply: The apply method is similar to call, but it takes the arguments as an array instead of individually. It takes the this value as the first argument, followed by an array of arguments.
+
+        Example:
+
+        ```javascript
+        function sum(a, b, c) {
+            return a + b + c;
+        }
+
+        const numbers = [1, 2, 3];
+
+        const result = sum.apply(null, numbers);
+        console.log(result); // logs 
+        ```
+    3. bind: The bind method returns a new function that, when called, has the this value set to a specified value and any number of arguments passed to it. It does not immediately invoke the function, but instead returns a new function that can be called later with the specified this value and arguments.
+
+        Example:
+        ```javascript
+        function greet(name) {
+            console.log(`Hello, ${name}! My name is ${this.name}.`);
+        }
+
+        const person = { name: 'Alice' };
+
+        const greetPerson = greet.bind(person);
+
+        greetPerson('Bob'); // logs "Hello, Bob! My name is Alice."
+        ```
+    
