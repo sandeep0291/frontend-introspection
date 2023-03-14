@@ -69,19 +69,19 @@ D. [Coding / Array / Objects]()
 
     Hoisting is a JavaScript mechanism that moves variable and function declarations to the top of their respective scopes during the compilation phase, allowing variables and functions to be used before they are declared. This can sometimes result in unexpected behavior, especially when combined with closures.
 
-    ```javacript
+    ```javascript
     console.log(x); // Output: undefined
     var x = 10;
     ```
 
-    ```javacript
+    ```javascript
     foo(); // Output: "Hello, world!"
 
     function foo() {
     console.log("Hello, world!");
     ```
 
-    ```javacript
+    ```javascript
     foo(); // Output: TypeError: foo is not a function
 
     var foo = function() {
@@ -91,7 +91,7 @@ D. [Coding / Array / Objects]()
 
     In this example, a function expression is used to create the foo() function. However, when we try to call the function before it has been declared, we get a TypeError instead of a reference error. This is because the variable declaration is hoisted, but the function expression is not.
 
-    ```javacript
+    ```javascript
     function outer() {
         console.log(x); // Output: undefined
 
@@ -118,7 +118,7 @@ D. [Coding / Array / Objects]()
 
     For example:
 
-    ```javacript
+    ```javascript
     function example() {
     var x = 1;
     let y = 2;
@@ -506,7 +506,7 @@ D. [Coding / Array / Objects]()
 
     In summary, the prototype property and prototype chaining are important concepts in JavaScript that allow objects to inherit properties and methods from other objects in a flexible and efficient way. Understanding how they work is key to writing effective and reusable code in JavaScript.
 
-13. **What is Lexical Scope in Javacript**
+13. **What is Lexical Scope in javascript**
 
     Lexical scope is a way of determining the scope of a variable or a function in JavaScript based on where it is defined in the source code. In other words, it refers to the visibility of variables and functions within a particular block of code, and it's determined at the time the code is written, not when it's executed.
 
