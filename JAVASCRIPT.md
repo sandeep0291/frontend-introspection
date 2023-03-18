@@ -109,6 +109,22 @@ D. [Coding / Array / Objects]()
 
     In this example, the x variable is declared and initialized in the outer function, but when we try to log its value before it has been initialized, we get undefined. However, when we call the inner function, which also has access to the x variable, it logs the correct value of "Hello, world!". This is because the variable declaration is hoisted to the top of its scope, but the assignment is not.
 
+    ***In JavaScript hoisting, function declarations are hoisted before variable declarations. This means that functions can be called before they are declared in the code, whereas variables need to be declared before they can be used.***
+
+    ```javascript
+    var x = 1;
+    function foo() {
+        console.log(x);
+        var x = 2;
+        console.log(x);
+    }
+    foo();
+    // output
+    // undefinde and 2
+    ```
+    At first glance, it might seem like the output should be 1 and 2, since x is declared and assigned the value 1 before the foo function is called. However, due to hoisting, the var x = 2 statement is actually moved to the top of the foo function, above the console.log(x) statement.
+
+
 3.  ### What is the difference between `let`, `const`, and `var` in JavaScript
 
     `let`, `var`, and `const` are all used to declare variables in JavaScript, but they have different scoping rules and behaviors.
@@ -191,7 +207,7 @@ D. [Coding / Array / Objects]()
     }
 
     var closure = outer(10);
-    closure(5); // Output: 1
+    closure(5); // Output: 15
     ```
 
     In this example, the outer() function returns an inner function that has access to the x parameter in the outer scope. When we call the closure() function with an argument of 5, it logs the sum of x and y, which is 15.
@@ -291,15 +307,15 @@ D. [Coding / Array / Objects]()
     const button = document.getElementById("button");
 
     outer.addEventListener("click", () => {
-    console.log("outer clicked");
+        console.log("outer clicked");
     });
 
     inner.addEventListener("click", () => {
-    console.log("inner clicked");
+        console.log("inner clicked");
     });
 
     button.addEventListener("click", () => {
-    console.log("button clicked");
+        console.log("button clicked");
     });
 
     // output 
@@ -325,7 +341,7 @@ D. [Coding / Array / Objects]()
         ```javascript
         const numbers = [1, 2, 3];
         const doubled = numbers.map(function(num) {
-        return num * 2;
+            return num * 2;
         });
         console.log(doubled); // Output: [2, 4, 6]
         ```
@@ -334,11 +350,11 @@ D. [Coding / Array / Objects]()
 
        ```javascript
         function makeCounter() {
-        let count = 0;
-        return function() {
-            count++;
-            console.log(count);
-        };
+            let count = 0;
+            return function() {
+                count++;
+                console.log(count);
+            };
         }
         const counter = makeCounter();
         counter(); // Output: 1
@@ -560,7 +576,7 @@ D. [Coding / Array / Objects]()
         const numbers = [1, 2, 3];
 
         const result = sum.apply(null, numbers);
-        console.log(result); // logs 
+        console.log(result); // 6 
         ```
     3. bind: The bind method returns a new function that, when called, has the this value set to a specified value and any number of arguments passed to it. It does not immediately invoke the function, but instead returns a new function that can be called later with the specified this value and arguments.
 
@@ -603,6 +619,26 @@ D. [Coding / Array / Objects]()
       <summary>Answer</summary>
       <p>
       4
+
+      In JavaScript, both x++ and ++x are used to increment the value of a variable by 1. However, there is a difference in how they behave.
+
+      The x++ operator is called the post-increment operator. It first returns the value of x, and then increments x by 1. Here's an example:
+
+    ```javascript
+    let x = 1;
+    let y = x++; // y is assigned the value of 1, then x is incremented to 2
+    console.log(x); // outputs 2
+    console.log(y); // outputs 1
+    ```
+    The ++x operator is called the pre-increment operator. It first increments x by 1, and then returns the value of x. Here's an example:
+
+    ```javascript
+    let x = 1;
+    let y = ++x; // x is incremented to 2, then y is assigned the value of 2
+    console.log(x); // outputs 2
+    console.log(y); // outputs 2
+    ```
+    So, the difference between x++ and ++x is the order in which the increment operation is performed relative to the current value of x. If you need to use the incremented value in the same statement, you should use ++x. If you need to use the original value before incrementing, you should use x++.
       </p>
     </details>
 
@@ -616,6 +652,20 @@ D. [Coding / Array / Objects]()
       <summary>Answer</summary>
       <p>
       undefined object
+
+      Here's what happens:
+
+     1. The first line of code declares a variable x and initializes it with the value of the expression [typeof x, typeof y][1]
+
+        At this point, x is undefined because it hasn't been initialized yet, and y is also undefined because it hasn't been declared yet. The expression [typeof x, typeof y][1] creates an array with two elements: the first element is the result of typeof x, which is "undefined", and the second element is the result of typeof y, which is also "undefined". The expression [typeof x, typeof y] evaluates to ["undefined", "undefined"], and [1] returns the second element of this array, which is "undefined". So, x is assigned the value of "undefined".
+
+    2. The second line of code declares a variable y and initializes it with the value of the expression typeof [x, y].
+
+       At this point, x is "undefined", and y is still undefined. The expression [x, y] creates an array with two elements: the first element is the value of x, which is "undefined", and the second element is the value of y, which is still undefined. The expression typeof [x, y] returns "object", because arrays are considered objects in JavaScript. So, y is assigned the value of "object".
+
+    3. The last line of code logs the values of x and y to the console, separated by a space.
+
+       At this point, x is "undefined", and y is "object". The expression x + " " + y concatenates the values of x and y as strings, separated by a space. So, the output is "undefined object".
       </p>
     </details>
 
@@ -630,6 +680,26 @@ D. [Coding / Array / Objects]()
       <summary>Answer</summary>
       <p>
       3
+
+      Here's what happens:
+
+    1. The function foo is declared with two parameters a and b.
+
+    2. Inside the function body, the built-in arguments    object is used to determine the number of arguments passed to the function. The arguments object is an array-like object that contains all the arguments passed to the function, regardless of the number of parameters defined in the function declaration.
+
+    3. The arguments.length property returns the number of arguments passed to the function.
+
+    4. The function is called with three arguments 1, 2, and 3.
+
+    5. The console.log statement logs the return value of the function foo to the console.
+
+    6. Inside the function, the arguments.length property returns the number of arguments passed to the function, which is 3 in this case.
+
+    7. The return value of the function is 3.
+
+    8. The console.log statement logs the return value 3 to the console.
+
+    So, the output of the code is 3.
       </p>
     </details>
 
@@ -672,7 +742,7 @@ D. [Coding / Array / Objects]()
     }
 
     Person.prototype.printName = function() {
-    console.log(this.name);
+        console.log(this.name);
     };
 
     var person1 = new Person("Alice");
