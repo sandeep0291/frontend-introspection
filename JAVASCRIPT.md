@@ -6,7 +6,7 @@ A. [Fundamentals Theory](#fundamentals-theory)
 
 B. [Code Snippets Tricky Questions](#code-Snippets-tricky-questions)
 
-C. [Advanced Concepts]()
+C. [Advanced Concepts](#advanced-concepts)
 
 D. [Coding / Array / Objects]()
 
@@ -889,3 +889,42 @@ D. [Coding / Array / Objects]()
     true, false
       </p>
     </details>
+
+## Advanced Concepts
+
+1. ### Garbage Collection Methods
+    1. **Reference Counting:** An object is said to be "garbage", or collectible if there are zero references pointing to it.
+    2. **Mark-and-sweep:** This algorithm reduces the definition of "an object is no longer needed" to "an object is unreachable". Starts from global Object and check if any object is reachable from prototype changing
+2. ### Several runtimes communicating together
+    A web worker or a cross-origin iframe has its **own stack, heap, and message queue**. Two distinct runtimes can only communicate through sending messages via the **postMessage method**. This method adds a message to the other runtime if the latter listens to message events.
+3. ### Debouncing and Throttling
+    1. **Debouncing:** For search input field
+    Snippet:
+    ```
+    export const debounce = (callBack, delay) => {
+      let timeId = null;
+
+      return (...args) => {
+        clearTimeout(timeId);
+        timeId = setTimeout(() => {
+          callBack(args);
+        }, delay);
+      };
+    };
+    ```
+    2. **Throttle:** For scrolling or resizing event handlers
+    Snippet
+    ```
+    export const throttle = (callBack, delay) => {
+      let shouldWait = false;
+      return (...args) => {
+        if (shouldWait) return;
+        callBack(...args);
+
+        shouldWait = true;
+        setTimeout(() => {
+          shouldWait = false;
+        }, delay);
+      };
+    };
+    ```
