@@ -915,7 +915,7 @@ D. [Coding / Array / Objects]()
     2. **Throttle:** For scrolling or resizing event handlers
     Snippet
     ```
-    export const throttle = (callBack, delay) => {
+    export const throttling = (callBack, delay) => {
       let shouldWait = false;
       return (...args) => {
         if (shouldWait) return;
