@@ -258,6 +258,7 @@ D. [Coding / Array / Objects]()
 
     The process repeats itself as long as there are functions in the task queue.
 
+    1. Snippet
     ```javascript
     console.log("start");
 
@@ -272,6 +273,38 @@ D. [Coding / Array / Objects]()
     end
     setTimeout
     ```
+
+    2. Snippet
+    ```
+    const seconds = new Date().getTime() / 1000;
+
+    setTimeout(() => {
+      // prints out "2", meaning that the callback is not called immediately after 500 milliseconds.
+      console.log(`Ran after ${new Date().getTime() / 1000 - seconds} seconds`);
+    }, 500);
+
+    while (true) {
+      if (new Date().getTime() / 1000 - seconds >= 2) {
+        console.log("Good, looped for 2 seconds");
+        break;
+      }
+    }
+    ```
+    <details>
+      <summary>Answer</summary>
+      <p>
+        //After roughly 2 seconds <br />
+        Good, lopped for 2 seconds <br />
+        Ran after 2.000999927520752 seconds
+
+        Here is explaination:
+        1. asynch code pushed to Web API to handle, callback pushed to task queue.
+        2. synch while loop is executed for 2 secs
+        3. console.log('Good....') executed
+        4. once call stack is empty console.log('Ran after...') gets pushed and executed.
+      </p>
+    </details>
+
 
 6. **What is event bubbling in JavaScript?**
     
