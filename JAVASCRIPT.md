@@ -933,8 +933,8 @@ D. [Coding / Array / Objects]()
 3. ### Debouncing and Throttling
     1. **Debouncing:** For search input field
     Snippet:
-    ```
-    export const debounce = (callBack, delay) => {
+    ```javascript
+    const debounce = (callBack, delay) => {
       let timeId = null;
 
       return (...args) => {
@@ -947,8 +947,8 @@ D. [Coding / Array / Objects]()
     ```
     2. **Throttle:** For scrolling or resizing event handlers
     Snippet
-    ```
-    export const throttling = (callBack, delay) => {
+    ```javascript
+    const throttling = (callBack, delay) => {
       let shouldWait = false;
       return (...args) => {
         if (shouldWait) return;
