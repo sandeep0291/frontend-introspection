@@ -6,7 +6,7 @@ A. [Fundamentals Theory](#fundamentals-theory)
 
 B. [Code Snippets Tricky Questions](#code-Snippets-tricky-questions)
 
-C. [Advanced Concepts]()
+C. [Advanced Concepts](#advanced-concepts)
 
 
 
@@ -421,3 +421,33 @@ C. [Advanced Concepts]()
     This is just a simple example, but you can use the useReducer hook to manage complex state that requires more than just simple state updates. You can dispatch actions that carry payloads with additional data, and you can use the reducer function to perform more complex state updates based on the action type and payload.
 
     By using useReducer, you can manage complex state in a more declarative way that is easier to reason about and maintain over time.
+    
+11. ### State is tied to a position in the tree
+    When you give a component state, you might think the state “lives” inside the component. But the state is actually held inside React. React associates  each piece of state it’s holding with the correct component by where that component sits in the UI tree.
+
+    Different component same position resets state, while **same component at same position preserves the state**.
+    ```javascript
+    (
+        <div>
+          {isFancy ? (
+            <Counter isFancy={true} /> 
+          ) : (
+            <Counter isFancy={false} /> 
+          )}
+          <label>
+            <input
+              type="checkbox"
+              checked={isFancy}
+              onChange={e => {
+                setIsFancy(e.target.checked)
+              }}
+            />
+            Use fancy styling
+          </label>
+        </div>
+    )
+    ```
+    In example given even if there are two instances of **Counter** component, but they are conditionally rendered at same place in DOM. So they share the same state implicitly whenever there parent is re-rendering (by changing value of isFancy state value).
+    <img width="727" alt="image" src="https://user-images.githubusercontent.com/51256048/226250833-66f9edd5-8496-44da-bdbc-aa8d4acb4a6e.png">
+
+
