@@ -275,7 +275,7 @@ D. [Coding / Array / Objects]()
     ```
 
     2. Snippet
-    ```
+    ```javascript
     const seconds = new Date().getTime() / 1000;
 
     setTimeout(() => {
