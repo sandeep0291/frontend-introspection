@@ -434,16 +434,6 @@ C. [Advanced Concepts](#advanced-concepts)
           ) : (
             <Counter isFancy={false} /> 
           )}
-          <label>
-            <input
-              type="checkbox"
-              checked={isFancy}
-              onChange={e => {
-                setIsFancy(e.target.checked)
-              }}
-            />
-            Use fancy styling
-          </label>
         </div>
     )
     ```
@@ -461,11 +451,6 @@ C. [Advanced Concepts](#advanced-concepts)
           {!isPlayerA &&
             <Counter person="Sarah" />
           }
-          <button onClick={() => {
-            setIsPlayerA(!isPlayerA);
-          }}>
-            Next player!
-          </button>
         </div>
     )
     ```
@@ -479,11 +464,6 @@ C. [Advanced Concepts](#advanced-concepts)
           ) : (
             <Counter key="Sarah" person="Sarah" />
           )}
-          <button onClick={() => {
-            setIsPlayerA(!isPlayerA);
-          }}>
-            Next player!
-          </button>
         </div>
     )
     ```
