@@ -447,7 +447,44 @@ C. [Advanced Concepts](#advanced-concepts)
         </div>
     )
     ```
-    In example given even if there are two instances of **Counter** component, but they are conditionally rendered at same place in DOM. So they share the same state implicitly whenever there parent is re-rendering (by changing value of isFancy state value).
+    In example given, even if there are two instances of **Counter** component, but they are conditionally rendered at same place in DOM. So they share the same state implicitly whenever there parent is re-rendering (by changing value of isFancy state value).
     <img width="727" alt="image" src="https://user-images.githubusercontent.com/51256048/226250833-66f9edd5-8496-44da-bdbc-aa8d4acb4a6e.png">
 
-
+    If you want to reset state at when same component at the same position, there are two ways:
+    1. Render components in different positions
+    ```javascript
+    (
+        <div>
+          {isPlayerA &&
+            <Counter person="Taylor" />
+          }
+          {!isPlayerA &&
+            <Counter person="Sarah" />
+          }
+          <button onClick={() => {
+            setIsPlayerA(!isPlayerA);
+          }}>
+            Next player!
+          </button>
+        </div>
+    )
+    ```
+    2. Give each component an explicit identity with **key**
+    Keys aren’t just for lists! You can use keys to make React distinguish between any components
+    ```javascript
+    (
+        <div>
+          {isPlayerA ? (
+            <Counter key="Taylor" person="Taylor" />
+          ) : (
+            <Counter key="Sarah" person="Sarah" />
+          )}
+          <button onClick={() => {
+            setIsPlayerA(!isPlayerA);
+          }}>
+            Next player!
+          </button>
+        </div>
+    )
+    ```
+    
